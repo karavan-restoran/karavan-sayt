@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Karavan — Ənənəvi Karvan Yolu Dadları</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --parchment:#F3E8D0;
+  --parchment-deep:#EADFC3;
+  --maroon:#63101F;
+  --maroon-deep:#480B17;
+  --ink:#2A2014;
+  --ink-soft:#5B4C3B;
+  --gold:#B78B2E;
+  --gold-light:#D8B45C;
+  --navy:#1F3A5E;
+  --cream-panel:#FBF6E9;
+  --shadow: 0 18px 40px -20px rgba(42,32,20,0.45);
+  --radius: 2px;
+  --maxw: 1180px;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--parchment);
+  color:var(--ink);
+  font-family:'Jost',sans-serif;
+  font-weight:400;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,.display{
+  font-family:'Cinzel',serif;
+  letter-spacing:0.03em;
+  color:var(--maroon);
+  margin:0;
+}
+.script{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  color:var(--ink-soft);
+}
+a{color:inherit;}
+img,svg{display:block;max-width:100%;}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+.eyebrow{
+  font-family:'Jost',sans-serif;
+  text-transform:uppercase;
+  letter-spacing:0.32em;
+  font-size:0.72rem;
+  color:var(--gold);
+  font-weight:600;
+  display:flex;align-items:center;gap:14px;
+}
+.eyebrow::before{content:"";width:32px;height:1px;background:var(--gold);display:inline-block;}
+.section{padding:96px 0;position:relative;}
+.section-head{max-width:640px;margin-bottom:52px;}
+.section-head h2{font-size:clamp(1.9rem,3.4vw,2.7rem);margin-top:14px;line-height:1.15;}
+.section-head p{color:var(--ink-soft);margin-top:16px;font-size:1.02rem;}
+
+/* ---------- Kilim pattern signature ---------- */
+.kilim-strip{
+  height:26px;
+  background-image: repeating-linear-gradient(45deg, var(--maroon) 0 6px, transparent 6px 12px),
+                     repeating-linear-gradient(-45deg, var(--gold) 0 6px, transparent 6px 12px);
+  background-blend-mode:multiply;
+  background-color:var(--parchment-deep);
+  border-top:3px solid var(--maroon);
+  border-bottom:3px solid var(--maroon);
+}
+.kilim-frame{
+  border:2px solid var(--maroon);
+  outline:1px solid var(--gold);
+  outline-offset:6px;
+  position:relative;
+}
+.kilim-corner{position:absolute;width:16px;height:16px;border:2px solid var(--gold);}
+.kilim-corner.tl{top:-2px;left:-2px;border-right:0;border-bottom:0;}
+.kilim-corner.tr{top:-2px;right:-2px;border-left:0;border-bottom:0;}
+.kilim-corner.bl{bottom:-2px;left:-2px;border-right:0;border-top:0;}
+.kilim-corner.br{bottom:-2px;right:-2px;border-left:0;border-top:0;}
+
+/* ---------- Header ---------- */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:20px 0;
+  transition:background .35s ease, padding .35s ease, box-shadow .35s ease;
+}
+header .wrap{display:flex;align-items:center;justify-content:space-between;}
+header.scrolled,header.mobile-open{
+  background:var(--parchment);
+  padding:12px 0;
+  box-shadow:0 8px 24px -12px rgba(42,32,20,0.35);
+  border-bottom:1px solid rgba(99,16,31,0.15);
+}
+.logo{display:flex;align-items:center;gap:10px;font-family:'Cinzel',serif;font-weight:700;font-size:1.4rem;color:var(--parchment);text-decoration:none;letter-spacing:0.04em;transition:color .35s;}
+header.scrolled .logo,header.mobile-open .logo{color:var(--maroon);}
+.logo svg{width:34px;height:34px;}
+.mainnav{display:flex;gap:34px;list-style:none;margin:0;padding:0;}
+.mainnav a{
+  text-decoration:none;color:var(--parchment);font-size:0.92rem;font-weight:500;
+  text-transform:uppercase;letter-spacing:0.08em;
+  position:relative;padding-bottom:4px;transition:color .35s;
+}
+header.scrolled .mainnav a,header.mobile-open .mainnav a{color:var(--ink);}
+.mainnav a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:2px;background:var(--gold);transition:width .3s;}
+.mainnav a:hover::after{width:100%;}
+.header-cta{
+  display:flex;align-items:center;gap:10px;
+  background:var(--maroon);color:var(--cream-panel);
+  padding:11px 20px;text-decoration:none;font-size:0.85rem;font-weight:600;
+  letter-spacing:0.05em;border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+.header-cta:hover{background:var(--maroon-deep);}
+.burger{display:none;background:none;border:0;cursor:pointer;padding:6px;}
+.burger span{display:block;width:26px;height:2px;background:var(--parchment);margin:5px 0;transition:background .35s;}
+header.scrolled .burger span,header.mobile-open .burger span{background:var(--maroon);}
+.mobile-panel{display:none;}
+
+/* ---------- Hero ---------- */
+.hero{
+  position:relative;
+  min-height:100vh;
+  display:flex;align-items:center;
+  background:linear-gradient(180deg, #2A1A17 0%, #4A1420 45%, #63101F 100%);
+  overflow:hidden;
+  color:var(--parchment);
+}
+.hero::before{
+  content:"";position:absolute;inset:0;
+  background-image:radial-gradient(circle at 20% 20%, rgba(216,180,92,0.08), transparent 40%);
+  pointer-events:none;
+}
+.hero-content{position:relative;z-index:4;width:100%;padding-top:80px;text-align:center;}
+.hero-content .eyebrow{justify-content:center;color:var(--gold-light);}
+.hero-content .eyebrow::before,.hero-content .eyebrow::after{content:"";width:32px;height:1px;background:var(--gold-light);display:inline-block;}
+.hero h1{
+  color:var(--parchment);
+  font-size:clamp(3.2rem,9vw,7.2rem);
+  line-height:0.95;
+  margin:22px 0 10px;
+  text-shadow:0 4px 30px rgba(0,0,0,0.4);
+}
+.hero .tagline{
+  font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.1rem,2vw,1.5rem);
+  color:var(--gold-light);max-width:560px;margin:0 auto 40px;
+}
+.hero-ctas{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-bottom:70px;}
+.btn{
+  padding:15px 32px;text-decoration:none;font-weight:600;font-size:0.9rem;
+  letter-spacing:0.06em;text-transform:uppercase;border-radius:var(--radius);
+  display:inline-flex;align-items:center;gap:10px;transition:transform .25s, box-shadow .25s, background .25s;
+  cursor:pointer;border:1px solid transparent;
+}
+.btn:hover{transform:translateY(-3px);}
+.btn-primary{background:var(--gold-light);color:var(--maroon-deep);box-shadow:0 14px 30px -12px rgba(216,180,92,0.6);}
+.btn-primary:hover{background:#EFCB78;}
+.btn-outline{border-color:rgba(243,232,208,0.55);color:var(--parchment);}
+.btn-outline:hover{background:rgba(243,232,208,0.12);}
+.btn-dark{background:var(--maroon);color:var(--cream-panel);}
+.btn-dark:hover{background:var(--maroon-deep);}
+
+/* caravan scene */
+.caravan-scene{position:absolute;left:0;right:0;bottom:0;height:230px;z-index:2;}
+.mountains{position:absolute;bottom:60px;left:0;width:100%;opacity:0.55;}
+.caravan-track{position:absolute;bottom:60px;left:0;width:200%;height:90px;animation:march 34s linear infinite;}
+@keyframes march{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.dune{position:absolute;bottom:0;left:0;width:100%;height:90px;background:var(--maroon-deep);
+  clip-path:polygon(0 100%,0 55%,10% 45%,22% 60%,35% 40%,50% 58%,64% 38%,78% 55%,90% 42%,100% 58%,100% 100%);}
+.stars{position:absolute;inset:0;background-image:radial-gradient(1.5px 1.5px at 10% 20%,#fff,transparent),radial-gradient(1.5px 1.5px at 80% 15%,#fff,transparent),radial-gradient(1px 1px at 45% 10%,#fff,transparent),radial-gradient(1px 1px at 65% 30%,#fff,transparent),radial-gradient(1.5px 1.5px at 30% 35%,#fff,transparent),radial-gradient(1px 1px at 90% 40%,#fff,transparent);opacity:0.5;z-index:1;}
+.scroll-cue{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);z-index:4;color:var(--gold-light);font-size:0.7rem;letter-spacing:0.25em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:8px;}
+.scroll-cue span{width:1px;height:36px;background:linear-gradient(var(--gold-light),transparent);animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:0.3;}50%{opacity:1;}}
+
+/* ---------- Intro / story ---------- */
+.story{
+  background:var(--cream-panel);
+  padding:90px 0;
+  border-top:3px solid var(--maroon);
+  border-bottom:3px solid var(--maroon);
+}
+.story .wrap{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center;}
+.story-figure{
+  aspect-ratio:4/5;background:var(--parchment-deep);position:relative;
+  display:flex;align-items:center;justify-content:center;
+}
+.story-figure svg{width:64%;}
+.story h2{font-size:clamp(1.8rem,3vw,2.4rem);margin:14px 0 20px;}
+.story p{color:var(--ink-soft);margin-bottom:16px;}
+.story-stats{display:flex;gap:38px;margin-top:32px;}
+.story-stats div strong{display:block;font-family:'Cinzel',serif;color:var(--maroon);font-size:1.7rem;}
+.story-stats div span{font-size:0.78rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-soft);}
+
+/* ---------- Menu ---------- */
+.menu-section{background:var(--parchment);}
+.menu-tabs{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:46px;}
+.menu-tab{
+  padding:11px 22px;border:1px solid var(--maroon);background:transparent;color:var(--maroon);
+  font-family:'Jost',sans-serif;font-size:0.85rem;letter-spacing:0.05em;text-transform:uppercase;
+  cursor:pointer;border-radius:var(--radius);transition:all .25s;
+}
+.menu-tab.active,.menu-tab:hover{background:var(--maroon);color:var(--cream-panel);}
+.menu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(99,16,31,0.25);border:1px solid rgba(99,16,31,0.25);}
+.menu-item{
+  background:var(--cream-panel);padding:26px 28px;display:none;
+  justify-content:space-between;align-items:flex-start;gap:18px;
+}
+.menu-item.show{display:flex;}
+.menu-item .mi-left h4{font-family:'Cinzel',serif;font-size:1.02rem;color:var(--ink);margin:0 0 4px;letter-spacing:0.02em;}
+.menu-item .mi-left .mi-local{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--ink-soft);font-size:0.95rem;}
+.menu-item .mi-left .mi-desc{font-size:0.85rem;color:var(--ink-soft);margin-top:6px;max-width:340px;}
+.mi-price{font-family:'Cinzel',serif;color:var(--navy);font-weight:600;white-space:nowrap;text-align:right;font-size:0.95rem;}
+.mi-price small{display:block;font-family:'Jost',sans-serif;font-weight:400;color:var(--ink-soft);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.05em;margin-top:2px;}
+.menu-note{
+  margin-top:40px;padding:22px 26px;border-left:3px solid var(--gold);background:var(--parchment-deep);
+  font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--ink-soft);font-size:1.05rem;
+}
+
+/* ---------- Reservation ---------- */
+.reserve-section{
+  background:var(--maroon);color:var(--parchment);
+  position:relative;
+}
+.reserve-section::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 20%, rgba(216,180,92,0.12), transparent 45%);}
+.reserve-section .eyebrow{color:var(--gold-light);}
+.reserve-section .eyebrow::before{background:var(--gold-light);}
+.reserve-section h2{color:var(--parchment);}
+.reserve-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:60px;align-items:start;position:relative;z-index:2;}
+.reserve-info p{color:rgba(243,232,208,0.8);margin-bottom:26px;}
+.info-line{display:flex;gap:14px;align-items:flex-start;margin-bottom:20px;}
+.info-line svg{flex-shrink:0;width:22px;height:22px;color:var(--gold-light);}
+.info-line div strong{display:block;font-family:'Cinzel',serif;font-size:0.85rem;letter-spacing:0.04em;margin-bottom:2px;}
+.info-line div span{color:rgba(243,232,208,0.75);font-size:0.9rem;}
+form.card-form{background:var(--cream-panel);color:var(--ink);padding:40px;border-radius:var(--radius);box-shadow:var(--shadow);}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px;}
+.field{display:flex;flex-direction:column;gap:6px;}
+.field.full{grid-column:1/-1;}
+.field label{font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink-soft);font-weight:600;}
+.field input,.field select,.field textarea{
+  border:1px solid rgba(42,32,20,0.25);background:#fff;padding:12px 14px;font-family:'Jost',sans-serif;
+  font-size:0.95rem;color:var(--ink);border-radius:var(--radius);
+}
+.field input:focus,.field select:focus,.field textarea:focus{outline:2px solid var(--gold);outline-offset:1px;border-color:var(--gold);}
+.check-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;margin-top:6px;}
+.check-item{display:flex;align-items:center;gap:8px;font-size:0.88rem;color:var(--ink-soft);}
+.check-item input{accent-color:var(--maroon);width:16px;height:16px;}
+.form-submit{width:100%;margin-top:8px;justify-content:center;}
+.form-note{font-size:0.78rem;color:var(--ink-soft);margin-top:10px;text-align:center;}
+
+/* ---------- Order / Delivery ---------- */
+.order-section{background:var(--parchment-deep);}
+.order-grid{display:grid;grid-template-columns:1.35fr 0.9fr;gap:44px;align-items:start;}
+.order-list{background:var(--cream-panel);border:1px solid rgba(99,16,31,0.2);}
+.order-cat-label{
+  padding:14px 22px;background:var(--maroon);color:var(--cream-panel);font-family:'Cinzel',serif;
+  font-size:0.85rem;letter-spacing:0.08em;text-transform:uppercase;
+}
+.order-row{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:16px 22px;border-bottom:1px solid rgba(99,16,31,0.12);}
+.order-row:last-child{border-bottom:0;}
+.order-row .or-name{font-weight:500;}
+.order-row .or-price{color:var(--navy);font-family:'Cinzel',serif;font-size:0.88rem;margin-left:8px;}
+.qty-box{display:flex;align-items:center;gap:0;border:1px solid var(--maroon);border-radius:var(--radius);overflow:hidden;flex-shrink:0;}
+.qty-box button{background:var(--parchment);border:0;width:30px;height:30px;cursor:pointer;font-size:1rem;color:var(--maroon);font-weight:700;}
+.qty-box button:hover{background:var(--gold-light);}
+.qty-box span{width:28px;text-align:center;font-size:0.9rem;}
+.cart-panel{
+  position:sticky;top:110px;background:var(--maroon);color:var(--cream-panel);padding:30px;border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+.cart-panel h3{color:var(--cream-panel);font-size:1.15rem;margin-bottom:16px;}
+#cartItems{list-style:none;margin:0 0 16px;padding:0;max-height:220px;overflow:auto;}
+#cartItems li{display:flex;justify-content:space-between;font-size:0.88rem;padding:7px 0;border-bottom:1px dashed rgba(243,232,208,0.25);}
+#cartEmpty{font-size:0.85rem;color:rgba(243,232,208,0.65);font-family:'Cormorant Garamond',serif;font-style:italic;}
+.cart-total{display:flex;justify-content:space-between;font-family:'Cinzel',serif;font-size:1.05rem;padding-top:12px;border-top:1px solid rgba(243,232,208,0.3);margin-bottom:20px;}
+.cart-panel .field label{color:rgba(243,232,208,0.85);}
+.cart-panel .field input,.cart-panel .field textarea{background:rgba(255,255,255,0.95);}
+.cart-panel .field{margin-bottom:14px;}
+
+/* ---------- Contact / Footer ---------- */
+footer{background:var(--ink);color:rgba(243,232,208,0.85);padding:70px 0 0;}
+.footer-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:40px;padding-bottom:50px;border-bottom:1px solid rgba(243,232,208,0.12);}
+.footer-grid h4{font-family:'Cinzel',serif;color:var(--gold-light);font-size:0.85rem;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:18px;}
+.footer-logo{display:flex;align-items:center;gap:10px;font-family:'Cinzel',serif;font-size:1.3rem;color:var(--parchment);margin-bottom:14px;}
+.footer-grid p{font-size:0.9rem;line-height:1.7;color:rgba(243,232,208,0.65);}
+.footer-links{list-style:none;padding:0;margin:0;}
+.footer-links li{margin-bottom:11px;}
+.footer-links a{text-decoration:none;color:rgba(243,232,208,0.75);font-size:0.9rem;display:flex;align-items:center;gap:8px;}
+.footer-links a:hover{color:var(--gold-light);}
+.footer-links svg{width:16px;height:16px;flex-shrink:0;color:var(--gold-light);}
+.socials{display:flex;gap:10px;margin-top:16px;}
+.socials a{width:36px;height:36px;border:1px solid rgba(243,232,208,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;color:rgba(243,232,208,0.8);}
+.socials a:hover{background:var(--gold-light);color:var(--ink);border-color:var(--gold-light);}
+.footer-bottom{padding:22px 0;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:0.78rem;color:rgba(243,232,208,0.5);}
+
+.wa-float{
+  position:fixed;bottom:26px;right:26px;z-index:200;
+  width:58px;height:58px;border-radius:50%;background:#25D366;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 10px 26px -8px rgba(0,0,0,0.5);
+  text-decoration:none;
+}
+.wa-float svg{width:28px;height:28px;color:#fff;}
+
+.toast{
+  position:fixed;bottom:100px;right:26px;z-index:210;background:var(--maroon);color:var(--cream-panel);
+  padding:14px 22px;border-radius:var(--radius);font-size:0.9rem;box-shadow:var(--shadow);
+  transform:translateY(20px);opacity:0;pointer-events:none;transition:all .3s;
+}
+.toast.show{transform:translateY(0);opacity:1;}
+
+@media (max-width:980px){
+  header .wrap .mainnav,header .wrap .header-cta{display:none;}
+  .burger{display:block;}
+  .mobile-panel.open{
+    display:flex;flex-direction:column;gap:18px;
+    background:var(--parchment);padding:22px 28px 28px;
+    box-shadow:0 12px 24px -12px rgba(0,0,0,0.3);
+    border-top:1px solid rgba(99,16,31,0.15);
+  }
+  .mobile-panel .mainnav{display:flex;flex-direction:column;gap:16px;}
+  .mobile-panel .mainnav a{color:var(--ink);}
+  .mobile-panel .header-cta{justify-content:center;}
+  .story .wrap,.reserve-grid,.order-grid{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+  .menu-grid{grid-template-columns:1fr;}
+  .form-row{grid-template-columns:1fr;}
+}
+@media (prefers-reduced-motion: reduce){
+  .caravan-track{animation:none;}
+  .scroll-cue span{animation:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header id="siteHeader">
+  <div class="wrap">
+    <a href="#top" class="logo">
+      <svg viewBox="0 0 40 40" fill="none"><path d="M4 30c3-8 6-8 9 0M13 30c3-10 6-10 9 0M22 30c3-12 6-12 9 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="20" cy="10" r="4" stroke="currentColor" stroke-width="2"/></svg>
+      KARAVAN
+    </a>
+    <ul class="mainnav">
+      <li><a href="#top">Ana Səhifə</a></li>
+      <li><a href="#menu">Menyu</a></li>
+      <li><a href="#hekaye">Haqqımızda</a></li>
+      <li><a href="#rezervasiya">Rezervasiya</a></li>
+      <li><a href="#sifaris">Sifariş</a></li>
+      <li><a href="#elaqe">Əlaqə</a></li>
+    </ul>
+    <a class="header-cta" href="tel:+995599722159">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      +995 599 72 21 59
+    </a>
+    <button class="burger" id="burgerBtn" aria-label="Menyunu aç"><span></span><span></span><span></span></button>
+  </div>
+  <div class="mobile-panel" id="mobilePanel">
+    <ul class="mainnav">
+      <li><a href="#top">Ana Səhifə</a></li>
+      <li><a href="#menu">Menyu</a></li>
+      <li><a href="#hekaye">Haqqımızda</a></li>
+      <li><a href="#rezervasiya">Rezervasiya</a></li>
+      <li><a href="#sifaris">Sifariş</a></li>
+      <li><a href="#elaqe">Əlaqə</a></li>
+    </ul>
+    <a class="header-cta" href="tel:+995599722159">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      +995 599 72 21 59
+    </a>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="top">
+  <div class="stars"></div>
+  <div class="caravan-scene">
+    <svg class="mountains" viewBox="0 0 1440 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="0,200 120,60 250,150 380,40 520,170 650,90 800,200" fill="#2A1A17"/>
+      <polygon points="700,200 850,80 1000,160 1150,50 1300,150 1440,90 1440,200" fill="#3A1D1D"/>
+    </svg>
+    <div class="dune"></div>
+    <svg class="caravan-track" viewBox="0 0 1600 90" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#EADFC3" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+      <!-- repeated camel caravan silhouettes -->
+      <g transform="translate(60,10)"><path d="M0 60 q6 -30 20-30 q4-14 16-14 q10 0 12 10 q10-4 16 6 q10-2 12 8 l4 20 M14 60 v10 M46 60 v10 M58 30 l6 -14 M6 30 q-14 4 -18 20"/><circle cx="9" cy="30" r="2" fill="#EADFC3"/></g>
+      <g transform="translate(220,10)"><path d="M0 60 q6 -30 20-30 q4-14 16-14 q10 0 12 10 q10-4 16 6 q10-2 12 8 l4 20 M14 60 v10 M46 60 v10 M58 30 l6 -14 M6 30 q-14 4 -18 20"/><circle cx="9" cy="30" r="2" fill="#EADFC3"/></g>
+      <g transform="translate(380,10)"><path d="M0 60 q6 -30 20-30 q4-14 16-14 q10 0 12 10 q10-4 16 6 q10-2 12 8 l4 20 M14 60 v10 M46 60 v10 M58 30 l6 -14 M6 30 q-14 4 -18 20"/><circle cx="9" cy="30" r="2" fill="#EADFC3"/></g>
+      <g transform="translate(560,4)"><path d="M0 4 v56 M0 4 h4" opacity="0"/></g>
+      <g transform="translate(700,10)"><path d="M0 60 q6 -30 20-30 q4-14 16-14 q10 0 12 10 q10-4 16 6 q10-2 12 8 l4 20 M14 60 v10 M46 60 v10 M58 30 l6 -14 M6 30 q-14 4 -18 20"/><circle cx="9" cy="30" r="2" fill="#EADFC3"/></g>
+      <g transform="translate(860,10)"><path d="M0 60 q6 -30 20-30 q4-14 16-14 q10 0 12 10 q10-4 16 6 q10-2 12 8 l4 20 M14 60 v10 M46 60 v10 M58 30 l6 -14 M6 30 q-14 4 -18 20"/><circle cx="9" cy="30" r="2" fill="#EADFC3"/></g>
+      <g transform="translate(1020,10)"><path d="M0 60 q6 -30 20-30 q4-14 16-14 q10 0 12 10 q10-4 16 6 q10-2 12 8 l4 20 M14 60 v10 M46 60 v10 M58 30 l6 -14 M6 30 q-14 4 -18 20"/><circle cx="9" cy="30" r="2" fill="#EADFC3"/></g>
+      <g transform="translate(1230,10)"><path d="M0 60 q6 -30 20-30 q4-14 16-14 q10 0 12 10 q10-4 16 6 q10-2 12 8 l4 20 M14 60 v10 M46 60 v10 M58 30 l6 -14 M6 30 q-14 4 -18 20"/><circle cx="9" cy="30" r="2" fill="#EADFC3"/></g>
+    </svg>
+  </div>
+  <div class="hero-content wrap">
+    <div class="eyebrow">Karvan Yolunun Ənənəvi Süfrəsi</div>
+    <h1>KARAVAN</h1>
+    <p class="tagline">Dadınız yoldan gəlir, süfrənizdə qalır — Qafqazın və İpək Yolunun ən köklü tamları bir masada.</p>
+    <div class="hero-ctas">
+      <a href="#menu" class="btn btn-primary">Menyuya bax</a>
+      <a href="#rezervasiya" class="btn btn-outline">Yer rezerv et</a>
+    </div>
+  </div>
+  <div class="scroll-cue"><span></span>Aşağı sürüşdürün</div>
+</section>
+
+<!-- ================= STORY ================= -->
+<section class="story" id="hekaye">
+  <div class="wrap">
+    <div class="story-figure kilim-frame">
+      <div class="kilim-corner tl"></div><div class="kilim-corner tr"></div><div class="kilim-corner bl"></div><div class="kilim-corner br"></div>
+      <svg viewBox="0 0 200 200" fill="none">
+        <circle cx="100" cy="100" r="94" stroke="#63101F" stroke-width="2"/>
+        <path d="M40 130c8-40 20-40 30 0M75 130c8-50 20-50 30 0M110 130c8-60 20-60 30 0" stroke="#63101F" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="95" cy="42" r="14" stroke="#B78B2E" stroke-width="3"/>
+      </svg>
+    </div>
+    <div>
+      <div class="eyebrow">Bizim Hekayəmiz</div>
+      <h2>Karvan yollarından süfrənizə gələn dadlar</h2>
+      <p>Karavan, əsrlərlə İpək Yolunda gəzən karvanların dayanacağı olan bu diyarın milli mətbəxini bir araya gətirir. Ocaqda bişən şişlər, əldə yoğrulan xəngəllər və nəsildən-nəslə ötürülən reseptlər — hər yemək bir hekayə danışır.</p>
+      <p>Mətbəximizdə təzəlik və ənənə əl-ələdir: ət hər gün mərinə olunur, tərəvəzlər bazardan təzə gətirilir, çörək və xəngəl əl ilə yoğrulur. Məqsədimiz sadədir — qonağımız süfrəmizdən ailə isti­liyi ilə qalxsın.</p>
+      <div class="story-stats">
+        <div><strong>30+</strong><span>Milli Yemək</span></div>
+        <div><strong>100%</strong><span>Təzə Məhsul</span></div>
+        <div><strong>Hər gün</strong><span>Açıq Ocaq</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="kilim-strip"></div>
+
+<!-- ================= MENU ================= -->
+<section class="section menu-section" id="menu">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Süfrəmiz</div>
+      <h2>Menyu</h2>
+      <p>Salatlardan ocaq üstü şişlərə, milli yeməklərdən xəngələ qədər — hər kateqoriyanı seçib öz süfrənizi qurun.</p>
+    </div>
+
+    <div class="menu-tabs" id="menuTabs">
+      <button class="menu-tab active" data-cat="all">Hamısı</button>
+      <button class="menu-tab" data-cat="salat">Salatlar &amp; Qəlyanaltı</button>
+      <button class="menu-tab" data-cat="sorba">Şorbalar</button>
+      <button class="menu-tab" data-cat="qrill">İsti Yeməklər / Qrill</button>
+      <button class="menu-tab" data-cat="milli">Milli Yeməklər</button>
+      <button class="menu-tab" data-cat="fast">Pizza &amp; Fast Food</button>
+      <button class="menu-tab" data-cat="icecek">İçəcəklər &amp; Şirniyyat</button>
+    </div>
+
+    <div class="menu-grid" id="menuGrid"><!-- filled by JS --></div>
+
+    <div class="menu-note">"İçəcəklər və Şirniyyat" bölməsi tezliklə tam siyahı ilə yenilənəcək — hazırkı içki və desert çeşidini bizdən telefon və ya WhatsApp vasitəsilə soruşa bilərsiniz.</div>
+  </div>
+</section>
+
+<!-- ================= RESERVATION ================= -->
+<section class="section reserve-section" id="rezervasiya">
+  <div class="wrap reserve-grid">
+    <div class="reserve-info">
+      <div class="eyebrow">Masanızı Hazırlayaq</div>
+      <h2 style="margin-top:14px;">Yer Rezervasiyası</h2>
+      <p>Ailəvi süfrədən dostlarla ocaq başına — masanızı əvvəlcədən ayırdın ki, gəldiyinizdə hər şey hazır olsun. Rezervasiya formunu doldurun, tələbiniz birbaşa WhatsApp vasitəsilə bizə çatsın.</p>
+      <div class="info-line">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <div><strong>Telefon / WhatsApp</strong><span>+995 599 72 21 59</span></div>
+      </div>
+      <div class="info-line">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4.5 8-11.8A8 8 0 0 0 4 10.2C4 17.5 12 22 12 22z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div><strong>Ünvan</strong><span>Karavan Restoranı — ünvan qeyd olunacaq</span></div>
+      </div>
+      <div class="info-line">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        <div><strong>İş saatları</strong><span>Hər gün 11:00 – 23:00</span></div>
+      </div>
+    </div>
+
+    <form class="card-form" id="reserveForm">
+      <div class="form-row">
+        <div class="field"><label for="rName">Ad Soyad</label><input id="rName" required placeholder="Adınız"></div>
+        <div class="field"><label for="rPhone">Telefon</label><input id="rPhone" required placeholder="+995 5__ __ __ __"></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label for="rDate">Tarix</label><input id="rDate" type="date" required></div>
+        <div class="field"><label for="rTime">Saat</label><input id="rTime" type="time" required></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label for="rGuests">Qonaq sayı</label>
+          <select id="rGuests">
+            <option>1 nəfər</option><option selected>2 nəfər</option><option>3 nəfər</option><option>4 nəfər</option>
+            <option>5-6 nəfər</option><option>7-10 nəfər</option><option>10+ nəfər (böyük məclis)</option>
+          </select>
+        </div>
+        <div class="field"><label for="rZone">Yer seçimi</label>
+          <select id="rZone"><option>Fərq etməz</option><option>İçəri masa</option><option>Bayır / Terras</option><option>Ayrıca otaq (məclis üçün)</option></select>
+        </div>
+      </div>
+      <div class="field full" style="margin-bottom:18px;">
+        <label>İstədiyiniz yeməklər (istəyə bağlı)</label>
+        <div class="check-grid" id="reserveDishChecks"></div>
+      </div>
+      <div class="field full" style="margin-bottom:22px;">
+        <label for="rNote">Əlavə qeyd</label>
+        <textarea id="rNote" rows="3" placeholder="Ad günü masası, uşaq oturacağı və s."></textarea>
+      </div>
+      <button type="submit" class="btn btn-dark form-submit">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Rezervasiyanı WhatsApp ilə göndər
+      </button>
+      <p class="form-note">Göndərdikdən sonra WhatsApp açılacaq, mesajı təsdiqləyib bizə yollamağınız kifayətdir.</p>
+    </form>
+  </div>
+</section>
+
+<!-- ================= ORDER / DELIVERY ================= -->
+<section class="section order-section" id="sifaris">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Evə Çatdırılma</div>
+      <h2>Sifariş Ver</h2>
+      <p>Sevdiyiniz yeməkləri seçin, səbətə əlavə edin və ünvanınızı qeyd edin — sifarişiniz birbaşa WhatsApp vasitəsilə mətbəximizə çatsın.</p>
+    </div>
+    <div class="order-grid">
+      <div class="order-list" id="orderList"><!-- filled by JS --></div>
+
+      <div class="cart-panel">
+        <h3>Səbətiniz</h3>
+        <ul id="cartItems"></ul>
+        <p id="cartEmpty">Səbətiniz hələ boşdur — menyudan yemək seçin.</p>
+        <div class="cart-total"><span>Cəmi</span><span id="cartTotal">0 GEL</span></div>
+        <div class="field"><label for="oName">Ad Soyad</label><input id="oName" required placeholder="Adınız"></div>
+        <div class="field"><label for="oPhone">Telefon</label><input id="oPhone" required placeholder="+995 5__ __ __ __"></div>
+        <div class="field"><label for="oAddress">Çatdırılma ünvanı</label><textarea id="oAddress" rows="2" required placeholder="Küçə, ev/mənzil, giriş kodu və s."></textarea></div>
+        <div class="field"><label for="oNote">Qeyd (istəyə bağlı)</label><input id="oNote" placeholder="Məs. acı olmasın, zəng edin və s."></div>
+        <button class="btn btn-primary form-submit" id="sendOrderBtn" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Sifarişi WhatsApp ilə göndər
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER / CONTACT ================= -->
+<footer id="elaqe">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          <svg viewBox="0 0 40 40" fill="none" width="30" height="30"><path d="M4 30c3-8 6-8 9 0M13 30c3-10 6-10 9 0M22 30c3-12 6-12 9 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="20" cy="10" r="4" stroke="currentColor" stroke-width="2"/></svg>
+          KARAVAN
+        </div>
+        <p>Karvan yollarının ənənəvi dadlarını sizin süfrənizə gətiririk. Ocaqda bişən şişlər, əldə yoğrulan xəngəllər və milli mətbəxin ən isti tamları.</p>
+        <div class="socials">
+          <a href="https://wa.me/995599722159" aria-label="WhatsApp" target="_blank" rel="noopener"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.39 1.26 4.81L2 22l5.41-1.42a9.87 9.87 0 0 0 4.63 1.18h.01c5.46 0 9.9-4.45 9.9-9.9C21.95 6.45 17.5 2 12.04 2zm5.8 14.07c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.79-4.17-4.94-4.36-.14-.19-1.18-1.57-1.18-3 0-1.43.75-2.13 1.02-2.42.27-.29.58-.36.78-.36.19 0 .39 0 .56.01.18.01.42-.07.65.5.24.58.82 2 .89 2.15.07.15.11.32.02.51-.09.19-.14.31-.27.48-.14.17-.29.37-.41.5-.14.14-.28.29-.12.57.16.28.72 1.19 1.55 1.93 1.06.95 1.96 1.24 2.24 1.38.28.14.44.12.61-.07.17-.19.71-.83.9-1.11.19-.28.38-.24.63-.14.26.09 1.65.78 1.93.92.28.14.47.21.54.33.07.12.07.68-.17 1.36z"/></svg></a>
+          <a href="tel:+995599722159" aria-label="Telefon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <h4>Naviqasiya</h4>
+        <ul class="footer-links">
+          <li><a href="#menu">Menyu</a></li>
+          <li><a href="#hekaye">Haqqımızda</a></li>
+          <li><a href="#rezervasiya">Rezervasiya</a></li>
+          <li><a href="#sifaris">Sifariş</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Əlaqə</h4>
+        <ul class="footer-links">
+          <li><a href="tel:+995599722159"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>+995 599 72 21 59</a></li>
+          <li><a href="https://wa.me/995599722159" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.39 1.26 4.81L2 22l5.41-1.42a9.87 9.87 0 0 0 4.63 1.18h.01c5.46 0 9.9-4.45 9.9-9.9C21.95 6.45 17.5 2 12.04 2z"/></svg>WhatsApp yazın</a></li>
+          <li><a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4.5 8-11.8A8 8 0 0 0 4 10.2C4 17.5 12 22 12 22z"/><circle cx="12" cy="10" r="3"/></svg>Ünvan (əlavə olunacaq)</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>İş Saatları</h4>
+        <ul class="footer-links">
+          <li>Bazar ertəsi – Bazar</li>
+          <li>11:00 – 23:00</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Karavan Restoranı. Bütün hüquqlar qorunur.</span>
+      <span>Dadınız yoldan gəlir, süfrənizdə qalır.</span>
+    </div>
+  </div>
+</footer>
+
+<a class="wa-float" href="https://wa.me/995599722159" target="_blank" rel="noopener" aria-label="WhatsApp ilə yazın">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.39 1.26 4.81L2 22l5.41-1.42a9.87 9.87 0 0 0 4.63 1.18h.01c5.46 0 9.9-4.45 9.9-9.9C21.95 6.45 17.5 2 12.04 2zm5.8 14.07c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.79-4.17-4.94-4.36-.14-.19-1.18-1.57-1.18-3 0-1.43.75-2.13 1.02-2.42.27-.29.58-.36.78-.36.19 0 .39 0 .56.01.18.01.42-.07.65.5.24.58.82 2 .89 2.15.07.15.11.32.02.51-.09.19-.14.31-.27.48-.14.17-.29.37-.41.5-.14.14-.28.29-.12.57.16.28.72 1.19 1.55 1.93 1.06.95 1.96 1.24 2.24 1.38.28.14.44.12.61-.07.17-.19.71-.83.9-1.11.19-.28.38-.24.63-.14.26.09 1.65.78 1.93.92.28.14.47.21.54.33.07.12.07.68-.17 1.36z"/></svg>
+</a>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ================= DATA ================= */
+const MENU = [
+  // Salatlar & Qəlyanaltı
+  {cat:'salat', name:'Sezar Salatı', local:'Cezari', price:13, desc:'Toyuq, kahı, qovurulmuş çörək və sezar sousu ilə'},
+  {cat:'salat', name:'Fri (Qızardılmış Kartof)', local:'', price:5},
+  {cat:'salat', name:'Manqal Salatı', local:'', price:5, desc:'Ocaqda bişmiş tərəvəzlərdən hazırlanan ənənəvi salat'},
+  {cat:'salat', name:'Çoban Salatı', local:'', price:5, desc:'Xiyar, pomidor, təzə göyərti'},
+  {cat:'salat', name:'Turşu', local:'', price:5, desc:'Ev şəraitində hazırlanmış mövsümi turşu'},
+  {cat:'salat', name:'Pendir', local:'', price:5},
+  {cat:'salat', name:'Göy-Göyərti', local:'', price:5, desc:'Mövsümi təzə göyərti çeşidi'},
+  {cat:'salat', name:'Sous', local:'', price:3},
+
+  // Şorbalar
+  {cat:'sorba', name:'Düşbərə', local:'', price:10, desc:'Əl açması xəmirdə xırdalanmış ət ilə ənənəvi şorba'},
+  {cat:'sorba', name:'Ostra', local:'', price:10, desc:'Ədviyyatlı, isti-acılı ənənəvi şorba'},
+
+  // Qrill / İsti yeməklər
+  {cat:'qrill', name:'Tikə Kabab', local:'', price:15, desc:'Ocaqda bişmiş doğranmış ət şişi'},
+  {cat:'qrill', name:'Basdırma', local:'', price:15},
+  {cat:'qrill', name:'Lülə Kabab', local:'', price:15, desc:'Əl ilə yoğrulmuş qiymədən hazırlanan şiş'},
+  {cat:'qrill', name:'Xan Kəbabı', local:'', price:15},
+  {cat:'qrill', name:'Qanad', local:'', price:10, desc:'Ocaqda bişmiş toyuq qanadları'},
+  {cat:'qrill', name:'Rulet', local:'', price:15},
+
+  // Milli yeməklər
+  {cat:'milli', name:'Xəngəl', local:'', price:1.70, unit:'ədəd', desc:'Əl açması xəmirdən ənənəvi xəngəl (qiymət 1 ədəd üçündür)'},
+  {cat:'milli', name:'Yarpaq Xəngəli — Sadə', local:'', price:10},
+  {cat:'milli', name:'Yarpaq Xəngəli — Ətli', local:'', price:15},
+  {cat:'milli', name:'Sac — Mal əti (Yarım)', local:'', price:35},
+  {cat:'milli', name:'Sac — Mal əti (Tam)', local:'', price:60},
+  {cat:'milli', name:'Sac — Quzu əti (Yarım)', local:'', price:40},
+  {cat:'milli', name:'Sac — Quzu əti (Tam)', local:'', price:70},
+  {cat:'milli', name:'Xaşlama', local:'', price:13},
+  {cat:'milli', name:'Dapa — Mal əti', local:'', price:50},
+  {cat:'milli', name:'Dapa — Quzu əti', local:'', price:60},
+  {cat:'milli', name:'Qalmax', local:'', price:10, desc:'Ocaqda bişmiş balıq'},
+  {cat:'milli', name:'Qutab — Sadə', local:'', price:5},
+  {cat:'milli', name:'Qutab — Ətli', local:'', price:8},
+  {cat:'milli', name:'İmeruli Xaçapuri', local:'', price:20, desc:'Ənənəvi pendirli çörək'},
+
+  // Pizza & Fast food
+  {cat:'fast', name:'Pizza', local:'', price:20},
+  {cat:'fast', name:'Lahmacun', local:'', price:8},
+];
+
+const CATS = {
+  salat:'Salatlar & Qəlyanaltı', sorba:'Şorbalar', qrill:'İsti Yeməklər / Qrill',
+  milli:'Milli Yeməklər', fast:'Pizza & Fast Food'
+};
+
+/* ================= MENU RENDER ================= */
+const menuGrid = document.getElementById('menuGrid');
+MENU.forEach((item,i)=>{
+  const el = document.createElement('div');
+  el.className = 'menu-item show';
+  el.dataset.cat = item.cat;
+  el.innerHTML = `
+    <div class="mi-left">
+      <h4>${item.name}</h4>
+      ${item.local?`<div class="mi-local">${item.local}</div>`:''}
+      ${item.desc?`<div class="mi-desc">${item.desc}</div>`:''}
+    </div>
+    <div class="mi-price">${item.price.toFixed(2).replace(/\.00$/,'')} GEL${item.unit?`<small>${item.unit}</small>`:''}</div>
+  `;
+  menuGrid.appendChild(el);
+});
+
+document.getElementById('menuTabs').addEventListener('click', e=>{
+  const btn = e.target.closest('.menu-tab');
+  if(!btn) return;
+  document.querySelectorAll('.menu-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const cat = btn.dataset.cat;
+  document.querySelectorAll('.menu-item').forEach(mi=>{
+    mi.classList.toggle('show', cat==='all' || mi.dataset.cat===cat);
+  });
+});
+
+/* ================= RESERVATION DISH CHECKLIST ================= */
+const popularDishes = ['Tikə Kabab','Lülə Kabab','Xan Kəbabı','Xəngəl','Sac — Mal əti (Tam)','Sac — Quzu əti (Tam)','Xaşlama','İmeruli Xaçapuri'];
+const checkGrid = document.getElementById('reserveDishChecks');
+popularDishes.forEach((d,i)=>{
+  const label = document.createElement('label');
+  label.className = 'check-item';
+  label.innerHTML = `<input type="checkbox" value="${d}"> ${d}`;
+  checkGrid.appendChild(label);
+});
+
+/* ================= RESERVATION SUBMIT ================= */
+document.getElementById('reserveForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const name = document.getElementById('rName').value.trim();
+  const phone = document.getElementById('rPhone').value.trim();
+  const date = document.getElementById('rDate').value;
+  const time = document.getElementById('rTime').value;
+  const guests = document.getElementById('rGuests').value;
+  const zone = document.getElementById('rZone').value;
+  const note = document.getElementById('rNote').value.trim();
+  const dishes = Array.from(checkGrid.querySelectorAll('input:checked')).map(i=>i.value);
+
+  let msg = `Salam Karavan! Yer rezervasiyası etmək istəyirəm:%0A`;
+  msg += `Ad: ${name}%0ATelefon: ${phone}%0ATarix: ${date}%0ASaat: ${time}%0AQonaq sayı: ${guests}%0AYer seçimi: ${zone}%0A`;
+  if(dishes.length) msg += `İstədiyi yeməklər: ${dishes.join(', ')}%0A`;
+  if(note) msg += `Qeyd: ${note}%0A`;
+
+  window.open(`https://wa.me/995599722159?text=${msg}`,'_blank');
+  showToast('Rezervasiya WhatsApp-a hazırlandı!');
+});
+
+/* ================= ORDER / CART ================= */
+const orderList = document.getElementById('orderList');
+const cart = {}; // name -> {price, qty}
+
+function buildOrderList(){
+  const grouped = {};
+  MENU.forEach(item=>{ (grouped[item.cat] = grouped[item.cat]||[]).push(item); });
+  Object.keys(CATS).forEach(catKey=>{
+    if(!grouped[catKey]) return;
+    const label = document.createElement('div');
+    label.className = 'order-cat-label';
+    label.textContent = CATS[catKey];
+    orderList.appendChild(label);
+    grouped[catKey].forEach(item=>{
+      const row = document.createElement('div');
+      row.className = 'order-row';
+      row.innerHTML = `
+        <div><span class="or-name">${item.name}</span><span class="or-price">${item.price.toFixed(2).replace(/\.00$/,'')} GEL${item.unit?'/'+item.unit:''}</span></div>
+        <div class="qty-box">
+          <button type="button" data-act="minus">−</button>
+          <span data-qty="0">0</span>
+          <button type="button" data-act="plus">+</button>
+        </div>
+      `;
+      const qtySpan = row.querySelector('[data-qty]');
+      row.querySelector('[data-act="plus"]').addEventListener('click', ()=>updateQty(item, qtySpan, 1));
+      row.querySelector('[data-act="minus"]').addEventListener('click', ()=>updateQty(item, qtySpan, -1));
+      orderList.appendChild(row);
+    });
+  });
+}
+buildOrderList();
+
+function updateQty(item, qtySpan, delta){
+  let qty = parseInt(qtySpan.dataset.qty,10) + delta;
+  if(qty < 0) qty = 0;
+  qtySpan.dataset.qty = qty;
+  qtySpan.textContent = qty;
+  if(qty === 0){ delete cart[item.name]; }
+  else{ cart[item.name] = {price:item.price, qty, unit:item.unit||''}; }
+  renderCart();
+}
+
+function renderCart(){
+  const ul = document.getElementById('cartItems');
+  const empty = document.getElementById('cartEmpty');
+  ul.innerHTML = '';
+  const keys = Object.keys(cart);
+  empty.style.display = keys.length ? 'none' : 'block';
+  let total = 0;
+  keys.forEach(name=>{
+    const {price, qty} = cart[name];
+    total += price*qty;
+    const li = document.createElement('li');
+    li.innerHTML = `<span>${name} × ${qty}</span><span>${(price*qty).toFixed(2).replace(/\.00$/,'')} GEL</span>`;
+    ul.appendChild(li);
+  });
+  document.getElementById('cartTotal').textContent = total.toFixed(2).replace(/\.00$/,'') + ' GEL';
+}
+
+document.getElementById('sendOrderBtn').addEventListener('click', ()=>{
+  const keys = Object.keys(cart);
+  const name = document.getElementById('oName').value.trim();
+  const phone = document.getElementById('oPhone').value.trim();
+  const address = document.getElementById('oAddress').value.trim();
+  const note = document.getElementById('oNote').value.trim();
+
+  if(!keys.length){ showToast('Zəhmət olmasa əvvəlcə menyudan yemək seçin.'); return; }
+  if(!name || !phone || !address){ showToast('Zəhmət olmasa ad, telefon və ünvanı doldurun.'); return; }
+
+  let total = 0;
+  let items = keys.map(k=>{ const {price,qty} = cart[k]; total += price*qty; return `${k} x${qty} (${(price*qty).toFixed(2).replace(/\.00$/,'')} GEL)`; }).join('%0A- ');
+
+  let msg = `Salam Karavan! Evə sifariş vermək istəyirəm:%0A- ${items}%0A%0ACəmi: ${total.toFixed(2).replace(/\.00$/,'')} GEL%0A%0AAd: ${name}%0ATelefon: ${phone}%0AÜnvan: ${address}%0A`;
+  if(note) msg += `Qeyd: ${note}%0A`;
+
+  window.open(`https://wa.me/995599722159?text=${msg}`,'_blank');
+  showToast('Sifariş WhatsApp-a hazırlandı!');
+});
+
+/* ================= TOAST ================= */
+let toastTimer;
+function showToast(text){
+  const t = document.getElementById('toast');
+  t.textContent = text;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove('show'), 3200);
+}
+
+/* ================= HEADER SCROLL ================= */
+const header = document.getElementById('siteHeader');
+window.addEventListener('scroll', ()=>{
+  header.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+/* ================= MOBILE NAV (simple toggle) ================= */
+document.getElementById('burgerBtn').addEventListener('click', ()=>{
+  const panel = document.getElementById('mobilePanel');
+  const isOpen = panel.classList.toggle('open');
+  header.classList.toggle('mobile-open', isOpen);
+});
+document.querySelectorAll('#mobilePanel a').forEach(a=>{
+  a.addEventListener('click', ()=>{
+    document.getElementById('mobilePanel').classList.remove('open');
+    header.classList.remove('mobile-open');
+  });
+});
+</script>
+</body>
+</html>
