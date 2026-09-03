@@ -450,11 +450,13 @@ footer{background:var(--ink);color:rgba(243,232,208,0.85);padding:70px 0 0;}
       <button class="menu-tab" data-cat="qrill">İsti Yeməklər / Qrill</button>
       <button class="menu-tab" data-cat="milli">Milli Yeməklər</button>
       <button class="menu-tab" data-cat="fast">Pizza &amp; Fast Food</button>
+      <button class="menu-tab" data-cat="cerez">Çərəzlər</button>
       <button class="menu-tab" data-cat="icecek">İçəcəklər &amp; Şirniyyat</button>
     </div>
 
     <div class="menu-grid" id="menuGrid"><!-- filled by JS --></div>
 
+    <div class="menu-note">"Şirniyyat" bölməsi tezliklə tam siyahı ilə yenilənəcək — hazırkı desert çeşidini bizdən telefon və ya WhatsApp vasitəsilə soruşa bilərsiniz.</div>
   </div>
 </section>
 
@@ -471,7 +473,7 @@ footer{background:var(--ink);color:rgba(243,232,208,0.85);padding:70px 0 0;}
       </div>
       <div class="info-line">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4.5 8-11.8A8 8 0 0 0 4 10.2C4 17.5 12 22 12 22z"/><circle cx="12" cy="10" r="3"/></svg>
-        <div><strong>Ünvan</strong><span>Karavan Restoranı — Kakheti, Sagarejo Iormughanlo</span></div>
+        <div><strong>Ünvan</strong><span>Karavan Restoranı — ünvan qeyd olunacaq</span></div>
       </div>
       <div class="info-line">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
@@ -644,29 +646,35 @@ const MENU = [
   {cat:'fast', name:'Pizza', local:'', price:20},
   {cat:'fast', name:'Lahmacun', local:'', price:8},
 
-   // İçəcəklər & Şirniyyat
-  {cat:'içkilər', name:'Nataxtari', local:'', price:3},
-{cat:'içkilər', name:'Zandukeli', local:'', price:3},
-{cat:'içkilər', name:'Zedazen', local:'', price:3},
-{cat:'içkilər', name:'Kola', local:'', price:5},
-{cat:'içkilər', name:'Borjomi', local:'', price:3},
-{cat:'içkilər', name:'Hell', local:'', price:3},
-{cat:'içkilər', name:'XL', local:'', price:5},
-{cat:'içkilər', name:'Redbull', local:'', price:6},
-{cat:'içkilər', name:'Pive', local:'', price:3},
-{cat:'içkilər', name:'Absalut (1L)', local:'', price:75},
-{cat:'içkilər', name:'Parlament (1L)', local:'', price:45},
-{cat:'içkilər', name:'Parlament (0.5L)', local:'', price:30},
-{cat:'içkilər', name:'Svayak (1L)', local:'', price:30},
-{cat:'içkilər', name:'Baykal (1L)', local:'', price:30},
-{cat:'içkilər', name:'Danzka (0.5L)', local:'', price:40},
-{cat:'içkilər', name:'Caca', local:'', price:6},
-{cat:'içkilər', name:'Caxir', local:'', price:15},
+  // Çərəzlər
+  {cat:'cerez', name:'Pendir Sacaq', local:'', price:7},
+  {cat:'cerez', name:'Noxud Bişmiş', local:'', price:5},
+  {cat:'cerez', name:'Noxud Qutu', local:'', price:5},
+  {cat:'cerez', name:'Cips', local:'', price:5},
 
+  // İçəcəklər
+  {cat:'icecek', name:'Nataxtari', local:'', price:3},
+  {cat:'icecek', name:'Zandukeli', local:'', price:3},
+  {cat:'icecek', name:'Zedazen', local:'', price:3},
+  {cat:'icecek', name:'Kola', local:'', price:5},
+  {cat:'icecek', name:'Borjomi', local:'', price:3},
+  {cat:'icecek', name:'Hell', local:'', price:3},
+  {cat:'icecek', name:'XL', local:'', price:5},
+  {cat:'icecek', name:'Redbull', local:'', price:6},
+  {cat:'icecek', name:'Pivə', local:'', price:3},
+  {cat:'icecek', name:'Absolut (1L)', local:'', price:75},
+  {cat:'icecek', name:'Parlament (1L)', local:'', price:45},
+  {cat:'icecek', name:'Parlament (0.5L)', local:'', price:30},
+  {cat:'icecek', name:'Svayak (1L)', local:'', price:30},
+  {cat:'icecek', name:'Baykal (1L)', local:'', price:30},
+  {cat:'icecek', name:'Danzka (0.5L)', local:'', price:40},
+  {cat:'icecek', name:'Çaça', local:'', price:6},
+  {cat:'icecek', name:'Çaxır', local:'', price:15},
+];
 
 const CATS = {
   salat:'Salatlar & Qəlyanaltı', sorba:'Şorbalar', qrill:'İsti Yeməklər / Qrill',
-  milli:'Milli Yeməklər', fast:'Pizza & Fast Food', içəcəklər:'İçəcəklər & Şirniyyat'
+  milli:'Milli Yeməklər', fast:'Pizza & Fast Food', cerez:'Çərəzlər', icecek:'İçəcəklər'
 };
 
 /* ================= MENU RENDER ================= */
