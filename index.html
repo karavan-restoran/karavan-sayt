@@ -6,6 +6,9 @@
 <title>Karavan — Ənənəvi Karvan Yolu Dadları</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
 <style>
 :root{
   --parchment:#F3E8D0;
@@ -473,7 +476,7 @@ footer{background:var(--ink);color:rgba(243,232,208,0.85);padding:70px 0 0;}
       </div>
       <div class="info-line">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4.5 8-11.8A8 8 0 0 0 4 10.2C4 17.5 12 22 12 22z"/><circle cx="12" cy="10" r="3"/></svg>
-        <div><strong>Ünvan</strong><span>Karavan Restoranı — Kakheti, Sagarejo-İormughanlo</span></div>
+        <div><strong>Ünvan</strong><span>Karavan Restoranı — ünvan qeyd olunacaq</span></div>
       </div>
       <div class="info-line">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
@@ -522,25 +525,25 @@ footer{background:var(--ink);color:rgba(243,232,208,0.85);padding:70px 0 0;}
 <section class="section order-section" id="sifaris">
   <div class="wrap">
     <div class="section-head">
-      <div class="eyebrow">Evə Çatdırılma</div>
-      <h2>Sifariş Ver</h2>
-      <p>Sevdiyiniz yeməkləri seçin, səbətə əlavə edin və ünvanınızı qeyd edin — sifarişiniz birbaşa WhatsApp vasitəsilə mətbəximizə çatsın.</p>
+      <div class="eyebrow" id="orderEyebrow">Masaya Sifariş</div>
+      <h2 id="orderHeading">Sifariş Ver</h2>
+      <p id="orderIntro">Sevdiyiniz yeməkləri seçin, səbətə əlavə edin — sifarişiniz birbaşa masanıza, mətbəximizə çatsın.</p>
     </div>
-    <div class="order-grid">
+
+    <div id="noTableNotice" class="menu-note" style="display:none;">Sifariş vermək üçün masanızdakı QR kodu skan edin. Menyuya yuxarıdan baxa bilərsiniz.</div>
+
+    <div class="order-grid" id="orderGrid">
       <div class="order-list" id="orderList"><!-- filled by JS --></div>
 
       <div class="cart-panel">
-        <h3>Səbətiniz</h3>
+        <h3 id="cartTitle">Səbətiniz</h3>
         <ul id="cartItems"></ul>
         <p id="cartEmpty">Səbətiniz hələ boşdur — menyudan yemək seçin.</p>
         <div class="cart-total"><span>Cəmi</span><span id="cartTotal">0 GEL</span></div>
-        <div class="field"><label for="oName">Ad Soyad</label><input id="oName" required placeholder="Adınız"></div>
-        <div class="field"><label for="oPhone">Telefon</label><input id="oPhone" required placeholder="+995 5__ __ __ __"></div>
-        <div class="field"><label for="oAddress">Çatdırılma ünvanı</label><textarea id="oAddress" rows="2" required placeholder="Küçə, ev/mənzil, giriş kodu və s."></textarea></div>
-        <div class="field"><label for="oNote">Qeyd (istəyə bağlı)</label><input id="oNote" placeholder="Məs. acı olmasın, zəng edin və s."></div>
+        <div class="field"><label for="oNote">Qeyd (istəyə bağlı)</label><input id="oNote" placeholder="Məs. acı olmasın və s."></div>
         <button class="btn btn-primary form-submit" id="sendOrderBtn" type="button">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          Sifarişi WhatsApp ilə göndər
+          Sifarişi göndər
         </button>
       </div>
     </div>
@@ -577,7 +580,7 @@ footer{background:var(--ink);color:rgba(243,232,208,0.85);padding:70px 0 0;}
         <ul class="footer-links">
           <li><a href="tel:+995599722159"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>+995 599 72 21 59</a></li>
           <li><a href="https://wa.me/995599722159" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.39 1.26 4.81L2 22l5.41-1.42a9.87 9.87 0 0 0 4.63 1.18h.01c5.46 0 9.9-4.45 9.9-9.9C21.95 6.45 17.5 2 12.04 2z"/></svg>WhatsApp yazın</a></li>
-          <li><a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4.5 8-11.8A8 8 0 0 0 4 10.2C4 17.5 12 22 12 22z"/><circle cx="12" cy="10" r="3"/></svg>Ünvan (JG3P+JF İormuğanlo)</a></li>
+          <li><a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4.5 8-11.8A8 8 0 0 0 4 10.2C4 17.5 12 22 12 22z"/><circle cx="12" cy="10" r="3"/></svg>Ünvan (əlavə olunacaq)</a></li>
         </ul>
       </div>
       <div>
@@ -602,6 +605,36 @@ footer{background:var(--ink);color:rgba(243,232,208,0.85);padding:70px 0 0;}
 <div class="toast" id="toast"></div>
 
 <script>
+/* ================= FIREBASE (masaya sifariş üçün) ================= */
+// Eyni Firebase layihəsi — karavan-hesab saytı ilə eynidir
+const firebaseConfig = {
+  apiKey: "AIzaSyCPsBHTQ0IjPUsRsoszs5Hj_Nmtlm_rj7k",
+  authDomain: "karavan-hesab.firebaseapp.com",
+  projectId: "karavan-hesab",
+  storageBucket: "karavan-hesab.firebasestorage.app",
+  messagingSenderId: "1012694504405",
+  appId: "1:1012694504405:web:4e68d31a950cba845ea35c",
+  measurementId: "G-J7DDH69NH4"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+// !!! BURAYA öz karavan-hesab hesabınızın Firebase UID-ni yazın !!!
+// Necə tapmaq olar: Firebase Console → Authentication → Users siyahısında
+// karavan-hesab saytına daxil olduğunuz Google hesabının yanındakı "User UID" sütunu.
+const STAFF_UID = "oz0DMqvHm7RbdqPsKFmNZ9MciKn1";
+
+let fbReady = false;
+auth.signInAnonymously().then(()=>{ fbReady = true; }).catch(err=>{
+  console.error('Anonim giriş xətası:', err);
+});
+
+// URL-dəki ?masa=5 parametrini oxuyuruq (masadakı QR kodu bu linki açır)
+const urlParams = new URLSearchParams(window.location.search);
+const tableParam = urlParams.get('masa');
+const tableNumber = tableParam && /^\d+$/.test(tableParam) ? parseInt(tableParam,10) : null;
+
 /* ================= DATA ================= */
 const MENU = [
   // Salatlar & Qəlyanaltı
@@ -796,24 +829,67 @@ function renderCart(){
   document.getElementById('cartTotal').textContent = total.toFixed(2).replace(/\.00$/,'') + ' GEL';
 }
 
-document.getElementById('sendOrderBtn').addEventListener('click', ()=>{
+/* ================= MASA REJİMİ (QR ilə giriş) ================= */
+function setupOrderUI(){
+  const notice = document.getElementById('noTableNotice');
+  const grid = document.getElementById('orderGrid');
+  const eyebrow = document.getElementById('orderEyebrow');
+  const heading = document.getElementById('orderHeading');
+  const intro = document.getElementById('orderIntro');
+  const cartTitle = document.getElementById('cartTitle');
+
+  if(tableNumber === null){
+    // QR skan edilmədən sayta girilib — sifariş vermək mümkün deyil, yalnız menyuya baxıla bilər
+    notice.style.display = 'block';
+    grid.style.display = 'none';
+    eyebrow.textContent = 'Masaya Sifariş';
+    heading.textContent = 'Sifariş üçün QR kodu skan edin';
+    intro.textContent = 'Sifariş vermək yalnız masanızdakı QR kod vasitəsilə mümkündür.';
+  } else {
+    eyebrow.textContent = `Masa ${tableNumber}`;
+    heading.textContent = 'Sifarişinizi hazırlayın';
+    intro.textContent = 'Sevdiyiniz yeməkləri seçin, səbətə əlavə edin — sifarişiniz birbaşa mətbəximizə çatsın.';
+    cartTitle.textContent = `Masa ${tableNumber} — Səbətiniz`;
+  }
+}
+setupOrderUI();
+
+document.getElementById('sendOrderBtn').addEventListener('click', async ()=>{
   const keys = Object.keys(cart);
-  const name = document.getElementById('oName').value.trim();
-  const phone = document.getElementById('oPhone').value.trim();
-  const address = document.getElementById('oAddress').value.trim();
   const note = document.getElementById('oNote').value.trim();
 
+  if(tableNumber === null){ showToast('Sifariş vermək üçün masanızdakı QR kodu skan edin.'); return; }
   if(!keys.length){ showToast('Zəhmət olmasa əvvəlcə menyudan yemək seçin.'); return; }
-  if(!name || !phone || !address){ showToast('Zəhmət olmasa ad, telefon və ünvanı doldurun.'); return; }
+  if(STAFF_UID === 'BURAYA_STAFF_UID_YAZIN'){ showToast('Sayt hələ qurulub bitirilməyib — STAFF_UID təyin edilməyib.'); return; }
 
-  let total = 0;
-  let items = keys.map(k=>{ const {price,qty} = cart[k]; total += price*qty; return `${k} x${qty} (${(price*qty).toFixed(2).replace(/\.00$/,'')} GEL)`; }).join('%0A- ');
+  const btn = document.getElementById('sendOrderBtn');
+  btn.disabled = true;
 
-  let msg = `Salam Karavan! Evə sifariş vermək istəyirəm:%0A- ${items}%0A%0ACəmi: ${total.toFixed(2).replace(/\.00$/,'')} GEL%0A%0AAd: ${name}%0ATelefon: ${phone}%0AÜnvan: ${address}%0A`;
-  if(note) msg += `Qeyd: ${note}%0A`;
+  const items = {};
+  keys.forEach(k=>{ items[k] = {qty: cart[k].qty, price: cart[k].price}; });
 
-  window.open(`https://wa.me/995599722159?text=${msg}`,'_blank');
-  showToast('Sifariş WhatsApp-a hazırlandı!');
+  try{
+    if(!fbReady){ await auth.signInAnonymously(); }
+    await db.collection('users').doc(STAFF_UID).collection('pendingOrders').add({
+      table: tableNumber,
+      items: items,
+      note: note || null,
+      status: 'pending',
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    // səbəti təmizlə
+    Object.keys(cart).forEach(k=>delete cart[k]);
+    document.querySelectorAll('#orderList [data-qty]').forEach(el=>{ el.dataset.qty = 0; el.textContent = '0'; });
+    document.getElementById('oNote').value = '';
+    renderCart();
+    showToast(`Sifarişiniz Masa ${tableNumber} üçün mətbəxə göndərildi!`);
+  }catch(e){
+    console.error(e);
+    showToast('Xəta baş verdi, zəhmət olmasa yenidən cəhd edin.');
+  }finally{
+    btn.disabled = false;
+  }
 });
 
 /* ================= TOAST ================= */
