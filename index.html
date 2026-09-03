@@ -455,7 +455,6 @@ footer{background:var(--ink);color:rgba(243,232,208,0.85);padding:70px 0 0;}
 
     <div class="menu-grid" id="menuGrid"><!-- filled by JS --></div>
 
-    <div class="menu-note">"İçəcəklər və Şirniyyat" bölməsi tezliklə tam siyahı ilə yenilənəcək — hazırkı içki və desert çeşidini bizdən telefon və ya WhatsApp vasitəsilə soruşa bilərsiniz.</div>
   </div>
 </section>
 
@@ -645,19 +644,29 @@ const MENU = [
   {cat:'fast', name:'Pizza', local:'', price:20},
   {cat:'fast', name:'Lahmacun', local:'', price:8},
 
-  // İçəcəklər
-   {n:"Nataxtari", p:3}, {n:"Zandukeli", p:3}, {n:"Zedazen", p:3},
-    {n:"Kola", p:5}, {n:"Borjomi", p:3}, {n:"Hell", p:3},
-    {n:"XL", p:5}, {n:"Redbull)", p:6},
-    {n:"Pive", p:3}, {n:"Absalut (1L)", p:75},
-    {n:"Parlament (1L)", p:45}, {n:"Parlament (0.5L)", p:30}, {n:"Svayak (1L)", p:30},
-    {n:"Baykal (1L)", p:30}, {n:"Danzka (0.5L)", p:40}, {n:"Caca ", p:6},
-    {n:"Caxir ", p:15},
-];
+   // İçəcəklər & Şirniyyat
+  {cat:'içkilər', name:'Nataxtari', local:'', price:3},
+{cat:'içkilər', name:'Zandukeli', local:'', price:3},
+{cat:'içkilər', name:'Zedazen', local:'', price:3},
+{cat:'içkilər', name:'Kola', local:'', price:5},
+{cat:'içkilər', name:'Borjomi', local:'', price:3},
+{cat:'içkilər', name:'Hell', local:'', price:3},
+{cat:'içkilər', name:'XL', local:'', price:5},
+{cat:'içkilər', name:'Redbull', local:'', price:6},
+{cat:'içkilər', name:'Pive', local:'', price:3},
+{cat:'içkilər', name:'Absalut (1L)', local:'', price:75},
+{cat:'içkilər', name:'Parlament (1L)', local:'', price:45},
+{cat:'içkilər', name:'Parlament (0.5L)', local:'', price:30},
+{cat:'içkilər', name:'Svayak (1L)', local:'', price:30},
+{cat:'içkilər', name:'Baykal (1L)', local:'', price:30},
+{cat:'içkilər', name:'Danzka (0.5L)', local:'', price:40},
+{cat:'içkilər', name:'Caca', local:'', price:6},
+{cat:'içkilər', name:'Caxir', local:'', price:15},
+
 
 const CATS = {
   salat:'Salatlar & Qəlyanaltı', sorba:'Şorbalar', qrill:'İsti Yeməklər / Qrill',
-  milli:'Milli Yeməklər', fast:'Pizza & Fast Food'
+  milli:'Milli Yeməklər', fast:'Pizza & Fast Food', içəcəklər:'İçəcəklər & Şirniyyat'
 };
 
 /* ================= MENU RENDER ================= */
